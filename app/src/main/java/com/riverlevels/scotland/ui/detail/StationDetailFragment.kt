@@ -41,8 +41,13 @@ class StationDetailFragment : Fragment() {
             binding.tvLastChecked.text = if (s.lastChecked > 0) {
                 "Last checked: ${SimpleDateFormat("dd MMM yyyy HH:mm", Locale.UK).format(Date(s.lastChecked))}"
             } else "Not yet checked"
-            binding.etAlertLevel.setText(s.alertLevel?.toString() ?: "")
-            binding.etFloodLevel.setText(s.floodLevel?.toString() ?: "")
+            // Only pre-fill fields if not already edited by user
+            if (binding.etAlertLevel.tag != "edited") {
+                binding.etAlertLevel.setText(s.alertLevel?.let { "%.3f".format(it) } ?: "")
+            }
+            if (binding.etFloodLevel.tag != "edited") {
+                binding.etFloodLevel.setText(s.floodLevel?.let { "%.3f".format(it) } ?: "")
+            }
 
             val statusText = when {
                 s.currentLevel == null -> "Unknown"
@@ -56,6 +61,29 @@ class StationDetailFragment : Fragment() {
                 "ALERT" -> 0xFFF57F17.toInt()
                 else -> 0xFF388E3C.toInt()
             })
+        }
+
+        viewModel.stats.observe(viewLifecycleOwner) { stats ->
+            if (stats == null) return@observe
+            val parts = mutableListOf<String>()
+            stats.medianAnnualMax?.let { parts += "Median annual peak: %.3fm".format(it) }
+            stats.recordMax?.let { parts += "Record: %.3fm".format(it) }
+            if (parts.isNotEmpty()) {
+                binding.tvStatsHint.text = parts.joinToString("  ·  ")
+                binding.tvStatsHint.visibility = View.VISIBLE
+                binding.btnSuggest.visibility = View.VISIBLE
+            } else {
+                binding.tvStatsHint.visibility = View.GONE
+                binding.btnSuggest.visibility = View.GONE
+            }
+        }
+
+        binding.btnSuggest.setOnClickListener {
+            val stats = viewModel.stats.value ?: return@setOnClickListener
+            // Suggest: alert = median annual max, flood = record max (if available)
+            stats.medianAnnualMax?.let { binding.etAlertLevel.setText("%.3f".format(it)) }
+            stats.recordMax?.let { binding.etFloodLevel.setText("%.3f".format(it)) }
+            Snackbar.make(binding.root, "Suggested thresholds filled in — review and save", Snackbar.LENGTH_LONG).show()
         }
 
         viewModel.isRefreshing.observe(viewLifecycleOwner) { refreshing ->

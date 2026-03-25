@@ -24,6 +24,18 @@ interface SepaApiService {
         @Query("format") format: String = "json"
     ): SepaTable
 
+    // Returns station custom_attributes including historical level statistics
+    @GET("KiWIS")
+    suspend fun getStationAttributes(
+        @Query("service") service: String = "kisters",
+        @Query("type") type: String = "queryServices",
+        @Query("datasource") datasource: Int = 0,
+        @Query("request") request: String = "getStationList",
+        @Query("station_no") stationNo: String,
+        @Query("returnfields") returnfields: String = "station_no,custom_attributes",
+        @Query("format") format: String = "json"
+    ): SepaTable
+
     // Returns [{"ts_id":...,"data":[[timestamp, value],...]}]
     @GET("KiWIS")
     suspend fun getTimeseriesValues(

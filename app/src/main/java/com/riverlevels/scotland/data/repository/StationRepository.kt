@@ -3,6 +3,7 @@ package com.riverlevels.scotland.data.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.riverlevels.scotland.data.api.SepaApiClient
+import com.riverlevels.scotland.data.model.StationStats
 import com.riverlevels.scotland.data.db.AppDatabase
 import com.riverlevels.scotland.data.db.MonitoredStation
 import com.riverlevels.scotland.data.model.StationInfo
@@ -61,6 +62,25 @@ class StationRepository(private val db: AppDatabase) {
         } catch (e: Exception) {
             Log.e("StationRepository", "getTimeseriesValues failed for $stationNo: ${e.message}", e)
             null
+        }
+    }
+
+    // Fetch historical level statistics for a station from SEPA metadata
+    suspend fun fetchStationStats(stationNo: String): StationStats {
+        return try {
+            val table = SepaApiClient.service.getStationAttributes(stationNo = stationNo)
+            if (table.size < 2) return StationStats(null, null, null)
+            val headers = table[0]
+            val vals = table[1]
+            fun field(name: String) = vals.getOrNull(headers.indexOf(name))?.toDoubleOrNull()
+            StationStats(
+                medianAnnualMax = field("sepa_median_annual_maximum_level"),
+                recordMax = field("sepa_maximum_level"),
+                recordMin = field("sepa_minimum_level")
+            )
+        } catch (e: Exception) {
+            Log.e("StationRepository", "fetchStationStats failed for $stationNo: ${e.message}")
+            StationStats(null, null, null)
         }
     }
 
