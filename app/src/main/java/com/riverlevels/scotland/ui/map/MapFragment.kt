@@ -29,8 +29,8 @@ class MapFragment : Fragment() {
     private lateinit var map: MapView
 
     // Scotland center
-    private val SCOTLAND_CENTER = GeoPoint(57.0, -4.0)
-    private val SCOTLAND_ZOOM = 7.0
+    private val SCOTLAND_CENTER = GeoPoint(57.1, -4.2)
+    private val SCOTLAND_ZOOM = 7.5
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         Configuration.getInstance().userAgentValue = requireContext().packageName
