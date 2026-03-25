@@ -1,5 +1,0 @@
-package com.riverlevels.scotland.data.api;
-
-@kotlin.Metadata(mv = {1, 9, 0}, k = 2, xi = 48, d1 = {"\u0000\f\n\u0000\n\u0002\u0010 \n\u0002\u0010\u000e\n\u0000*&\u0010\u0000\"\u0010\u0012\f\u0012\n\u0012\u0006\u0012\u0004\u0018\u00010\u00020\u00010\u00012\u0010\u0012\f\u0012\n\u0012\u0006\u0012\u0004\u0018\u00010\u00020\u00010\u0001\u00a8\u0006\u0003"}, d2 = {"SepaTable", "", "", "app_debug"})
-public final class SepaApiServiceKt {
-}
