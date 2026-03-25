@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="colorAccent">#42A5F5</color>
+    <color name="colorAlertYellow">#F57F17</color>
+    <color name="colorFloodRed">#D32F2F</color>
+    <color name="colorNormalGreen">#388E3C</color>
+    <color name="colorPrimary">#1565C0</color>
+    <color name="colorPrimaryDark">#0D47A1</color>
+    <color name="white">#FFFFFF</color>
+    <string name="add_station">Add Station</string>
+    <string name="alert_level_hint">Alert level (m)</string>
+    <string name="app_name">River Levels Scotland</string>
+    <string name="email_to_hint">Alert recipient email</string>
+    <string name="flood_level_hint">Flood level (m)</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_stations">Stations</string>
+    <string name="no_stations">No stations monitored yet.\nTap + to add a station.</string>
+    <string name="poll_interval_hint">Check interval (minutes, min 15)</string>
+    <string name="refresh">Refresh</string>
+    <string name="save_settings">Save Settings</string>
+    <string name="save_thresholds">Save Thresholds</string>
+    <string name="search_hint">Search by station or river name…</string>
+    <string name="smtp_host_hint">SMTP Host (e.g. smtp.gmail.com)</string>
+    <string name="smtp_password_hint">SMTP Password / App Password</string>
+    <string name="smtp_port_hint">Port (e.g. 587)</string>
+    <string name="smtp_username_hint">SMTP Username / Email</string>
+    <string name="use_ssl">Use SSL (port 465)</string>
+    <style name="Theme.RiverLevels" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="Theme.RiverLevels.NoActionBar" parent="Theme.RiverLevels">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

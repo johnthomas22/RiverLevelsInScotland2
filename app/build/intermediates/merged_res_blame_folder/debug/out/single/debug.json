@@ -1,0 +1,70 @@
+[
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/navigation_nav_graph.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/navigation/nav_graph.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/layout_item_station.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/layout/item_station.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/drawable_ic_water_level.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/drawable/ic_water_level.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/layout_fragment_station_detail.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/layout/fragment_station_detail.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/layout_item_search_station.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/layout/item_search_station.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/layout_fragment_add_station.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/layout/fragment_add_station.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/layout_fragment_stations.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/layout/fragment_stations.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/layout_fragment_settings.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/layout/fragment_settings.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/xml_network_security_config.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/xml/network_security_config.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/drawable_ic_back.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/drawable/ic_back.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/layout_activity_main.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/menu_bottom_nav_menu.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/menu/bottom_nav_menu.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/drawable_ic_settings.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/drawable/ic_settings.xml"
+    },
+    {
+        "merged": "com.riverlevels.scotland.app-merged_res-57:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.riverlevels.scotland.app-main-59:/mipmap-anydpi-v26/ic_launcher.xml"
+    }
+]

@@ -41,10 +41,6 @@ object EmailHelper {
                 }
             }
 
-            val session = Session.getInstance(props) {
-                javax.mail.Authenticator()
-            }
-
             val authenticator = object : javax.mail.Authenticator() {
                 override fun getPasswordAuthentication() =
                     javax.mail.PasswordAuthentication(username, password)
