@@ -1,5 +1,6 @@
 package com.riverlevels.scotland.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.riverlevels.scotland.data.api.SepaApiClient
 import com.riverlevels.scotland.data.db.AppDatabase
@@ -28,6 +29,7 @@ class StationRepository(private val db: AppDatabase) {
                 }
                 .sortedBy { it.stationName }
         } catch (e: Exception) {
+            Log.e("StationRepository", "getStationList failed: ${e.javaClass.simpleName}: ${e.message}", e)
             emptyList()
         }
     }
@@ -52,6 +54,7 @@ class StationRepository(private val db: AppDatabase) {
                 ?.getOrNull(1)
                 ?.toDoubleOrNull()
         } catch (e: Exception) {
+            Log.e("StationRepository", "getTimeseriesValues failed for $stationNo: ${e.message}", e)
             null
         }
     }

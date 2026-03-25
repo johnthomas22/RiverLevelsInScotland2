@@ -4,12 +4,14 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 // SEPA KiWIS API returns 2D arrays: first row = headers, rest = data rows
+// Base URL is https://timeseries.sepa.org.uk/KiWIS/
+// The servlet path is KiWIS (no trailing slash — server returns 404 with one)
 typealias SepaTable = List<List<String?>>
 
 interface SepaApiService {
 
     // Returns station_name, station_no, river_name, station_latitude, station_longitude
-    @GET(".")
+    @GET("KiWIS")
     suspend fun getStationList(
         @Query("service") service: String = "kisters",
         @Query("type") type: String = "queryServices",
@@ -21,7 +23,7 @@ interface SepaApiService {
     ): SepaTable
 
     // Returns last 2 hours of 15-minute level readings for a station
-    @GET(".")
+    @GET("KiWIS")
     suspend fun getTimeseriesValues(
         @Query("service") service: String = "kisters",
         @Query("type") type: String = "queryServices",
