@@ -45,14 +45,19 @@ class StationRepository(private val db: AppDatabase) {
     }
 
     // Fetch latest level reading for a station (returns null if unavailable)
+    // Response format: [{"ts_id":...,"data":[["2026-03-25T17:00:00.000Z", 1.234], ...]}]
     suspend fun fetchCurrentLevel(stationNo: String): Double? {
         return try {
             val tsPath = "1/$stationNo/SG/15m.Cmd"
-            val table = SepaApiClient.service.getTimeseriesValues(tsPath = tsPath)
-            table.drop(1)
-                .lastOrNull { row -> row.size >= 2 && !row[1].isNullOrBlank() }
-                ?.getOrNull(1)
-                ?.toDoubleOrNull()
+            val results = SepaApiClient.service.getTimeseriesValues(tsPath = tsPath)
+            val lastRow = results.firstOrNull()?.data?.lastOrNull()
+            // lastRow = [timestampString, doubleValue]
+            when (val v = lastRow?.getOrNull(1)) {
+                is Double -> v
+                is Number -> v.toDouble()
+                is String -> v.toDoubleOrNull()
+                else -> null
+            }
         } catch (e: Exception) {
             Log.e("StationRepository", "getTimeseriesValues failed for $stationNo: ${e.message}", e)
             null

@@ -1,11 +1,13 @@
 package com.riverlevels.scotland.data.api
 
+import com.riverlevels.scotland.data.model.TimeseriesResult
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-// SEPA KiWIS API returns 2D arrays: first row = headers, rest = data rows
 // Base URL is https://timeseries.sepa.org.uk/KiWIS/
-// The servlet path is KiWIS (no trailing slash — server returns 404 with one)
+// The servlet path is KiWIS — no trailing slash (server returns 404 with one)
+
+// Station list: 2D array  [["header",...],["val",...],...]
 typealias SepaTable = List<List<String?>>
 
 interface SepaApiService {
@@ -22,7 +24,7 @@ interface SepaApiService {
         @Query("format") format: String = "json"
     ): SepaTable
 
-    // Returns last 2 hours of 15-minute level readings for a station
+    // Returns [{"ts_id":...,"data":[[timestamp, value],...]}]
     @GET("KiWIS")
     suspend fun getTimeseriesValues(
         @Query("service") service: String = "kisters",
@@ -33,5 +35,5 @@ interface SepaApiService {
         @Query("period") period: String = "PT2H",
         @Query("returnfields") returnfields: String = "Timestamp,Value",
         @Query("format") format: String = "json"
-    ): SepaTable
+    ): List<TimeseriesResult>
 }
