@@ -8,6 +8,7 @@ typealias SepaTable = List<List<String?>>
 
 interface SepaApiService {
 
+    // Returns station_name, station_no, river_name, station_latitude, station_longitude
     @GET(".")
     suspend fun getStationList(
         @Query("service") service: String = "kisters",
@@ -15,7 +16,7 @@ interface SepaApiService {
         @Query("datasource") datasource: Int = 0,
         @Query("request") request: String = "getStationList",
         @Query("stationparameter_name") stationparameterName: String = "Level",
-        @Query("returnfields") returnfields: String = "station_name,station_id,station_no,river_name",
+        @Query("returnfields") returnfields: String = "station_name,station_no,river_name,station_latitude,station_longitude",
         @Query("format") format: String = "json"
     ): SepaTable
 

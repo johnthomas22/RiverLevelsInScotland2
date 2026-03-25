@@ -10,24 +10,20 @@ class StationRepository(private val db: AppDatabase) {
 
     val monitoredStations: LiveData<List<MonitoredStation>> = db.stationDao().getAllStations()
 
-    // Fetch all SEPA level stations for the search/add screen
-    suspend fun searchSepaStations(query: String): List<StationInfo> {
+    // Fetch all SEPA level stations (with coordinates) — used by map and search
+    // Response columns: station_name, station_no, river_name, station_latitude, station_longitude
+    suspend fun getAllSepaStations(): List<StationInfo> {
         return try {
             val table = SepaApiClient.service.getStationList()
-            // table[0] = headers: station_name, station_id, station_no, river_name
             table.drop(1)
-                .filter { row ->
-                    row.size >= 4 &&
-                    (query.isBlank() ||
-                     row[0]?.contains(query, ignoreCase = true) == true ||
-                     row[3]?.contains(query, ignoreCase = true) == true)
-                }
+                .filter { row -> row.size >= 5 && !row[0].isNullOrBlank() && !row[1].isNullOrBlank() }
                 .map { row ->
                     StationInfo(
                         stationName = row[0] ?: "",
-                        stationId = row[1] ?: "",
-                        stationNo = row[2] ?: "",
-                        riverName = row[3] ?: ""
+                        stationNo = row[1] ?: "",
+                        riverName = row[2] ?: "",
+                        latitude = row[3]?.toDoubleOrNull(),
+                        longitude = row[4]?.toDoubleOrNull()
                     )
                 }
                 .sortedBy { it.stationName }
@@ -36,14 +32,23 @@ class StationRepository(private val db: AppDatabase) {
         }
     }
 
+    // Filter cached/fetched list by query string (station name or river name)
+    fun filterStations(stations: List<StationInfo>, query: String): List<StationInfo> {
+        if (query.isBlank()) return stations
+        val q = query.trim()
+        return stations.filter { s ->
+            s.stationName.contains(q, ignoreCase = true) ||
+            s.riverName.contains(q, ignoreCase = true)
+        }
+    }
+
     // Fetch latest level reading for a station (returns null if unavailable)
     suspend fun fetchCurrentLevel(stationNo: String): Double? {
         return try {
             val tsPath = "1/$stationNo/SG/15m.Cmd"
             val table = SepaApiClient.service.getTimeseriesValues(tsPath = tsPath)
-            // Find last non-null value (skip header row)
             table.drop(1)
-                .lastOrNull { row -> row.size >= 2 && row[1] != null && row[1] != "" }
+                .lastOrNull { row -> row.size >= 2 && !row[1].isNullOrBlank() }
                 ?.getOrNull(1)
                 ?.toDoubleOrNull()
         } catch (e: Exception) {

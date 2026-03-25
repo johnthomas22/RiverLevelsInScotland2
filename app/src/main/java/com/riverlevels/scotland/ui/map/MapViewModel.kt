@@ -1,4 +1,4 @@
-package com.riverlevels.scotland.ui.add
+package com.riverlevels.scotland.ui.map
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -10,34 +10,31 @@ import com.riverlevels.scotland.data.model.StationInfo
 import com.riverlevels.scotland.data.repository.StationRepository
 import kotlinx.coroutines.launch
 
-class AddStationViewModel(app: Application) : AndroidViewModel(app) {
+class MapViewModel(app: Application) : AndroidViewModel(app) {
     private val repo = StationRepository(AppDatabase.getInstance(app))
 
-    val searchResults = MutableLiveData<List<StationInfo>>(emptyList())
+    val stations = MutableLiveData<List<StationInfo>>(emptyList())
+    val monitoredMap = MutableLiveData<Map<String, MonitoredStation>>(emptyMap())
     val isLoading = MutableLiveData(false)
     val error = MutableLiveData<String?>(null)
 
-    private var allStations: List<StationInfo> = emptyList()
-
     init {
-        loadAll()
+        load()
+        // Observe monitored stations for colour updates
+        repo.monitoredStations.observeForever { list ->
+            monitoredMap.value = list.associateBy { it.stationNo }
+        }
     }
 
-    private fun loadAll() = viewModelScope.launch {
+    fun load() = viewModelScope.launch {
         isLoading.value = true
         error.value = null
-        allStations = repo.getAllSepaStations()
-        if (allStations.isEmpty()) {
+        val result = repo.getAllSepaStations()
+        if (result.isEmpty()) {
             error.value = "Could not load stations — check your connection"
         }
-        searchResults.value = allStations
+        stations.value = result
         isLoading.value = false
-    }
-
-    fun search(query: String) {
-        searchResults.value = repo.filterStations(allStations, query)
-        error.value = if (searchResults.value!!.isEmpty() && query.isNotBlank())
-            "No stations matching \"$query\"" else null
     }
 
     fun addStation(info: StationInfo) = viewModelScope.launch {

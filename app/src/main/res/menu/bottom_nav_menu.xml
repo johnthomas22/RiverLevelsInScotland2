@@ -5,6 +5,10 @@
         android:icon="@drawable/ic_water_level"
         android:title="@string/nav_stations" />
     <item
+        android:id="@+id/mapFragment"
+        android:icon="@drawable/ic_map"
+        android:title="@string/nav_map" />
+    <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_settings"
         android:title="@string/nav_settings" />

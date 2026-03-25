@@ -22,13 +22,7 @@
         android:id="@+id/addStationFragment"
         android:name="com.riverlevels.scotland.ui.add.AddStationFragment"
         android:label="Add Station"
-        tools:layout="@layout/fragment_add_station">
-        <action
-            android:id="@+id/action_add_to_stations"
-            app:destination="@id/stationsFragment"
-            app:popUpTo="@id/stationsFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
+        tools:layout="@layout/fragment_add_station" />
 
     <fragment
         android:id="@+id/stationDetailFragment"
@@ -38,6 +32,16 @@
         <argument
             android:name="stationNo"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.riverlevels.scotland.ui.map.MapFragment"
+        android:label="Map"
+        tools:layout="@layout/fragment_map">
+        <action
+            android:id="@+id/action_map_to_detail"
+            app:destination="@id/stationDetailFragment" />
     </fragment>
 
     <fragment
